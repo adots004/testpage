@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic meta tags for character encoding and responsive design -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Change the title to your website name -->
+    <title>Andrew Dotson Tutoring</title>
+    <style>
+        /* 
+        ===========================================
+        CSS STYLING GUIDE
+        ===========================================
+        This section contains all the CSS for styling your website.
+        You can edit colors, fonts, spacing, and other visual elements here.
+        Look for comments explaining each section.
+        */
+        
+        /* Base styles - These affect the entire website */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Navigation styling */
+        header {
+            background-color: #2c3e50; /* Change this to your preferred header color */
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow under the header */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        nav {
+            display: flex; /* Uses flexbox for layout */
+            justify-content: space-between; /* Logo on left, menu on right */
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px; /* Size of your website name/logo */
+            font-weight: bold;
+            color: #fff; /* Logo text color */
+            text-decoration: none;
+            transition: color 0.3s ease;
+            /* To use an image logo instead, comment out the above and use this CSS:
+            background-image: url('your-logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 150px; 
+            height: 50px;
+            text-indent: -9999px; /* Hides the text */
+            /* Then change the HTML to add your site name inside the logo anchor tag */
+        }
+        
+        .nav-links {
+            display: flex; /* Horizontal menu */
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px; /* Space between menu items */
+        }
+        
+        .nav-links a {
+            color: #ecf0f1; /* Menu text color */
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s; /* Smooth color change on hover */
+        }
+        
+        .nav-links a:hover, 
+        .nav-links a.active {
+            color: #3498db; /* Hover/active link color - change as desired */
+        }
+        
+        /* 
+        ===========================================
+        CONTENT SECTIONS 
+        ===========================================
+        These control the main content areas that change when selecting different tabs
+        */
+        .content-section {
+            padding: 40px 0;
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            transition: color 0.3s ease;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.8;
+            transition: color 0.3s ease;
+        }
+        
+        /* Home section - Hero banner styling */
+        .hero {
+            margin-top: 20px;
+            background-color: #fff; /* Hero background color */
+            padding: 60px; /* Space inside the hero section */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hero h2 {
+            font-size: 28px; /* Subheading size */
+            margin-bottom: 20px;
+            color: #2c3e50; /* Subheading color */
+            transition: color 0.3s ease;
+        }
+        
+        /* Features section - The three boxes below the hero */
+        .features {
+            display: flex; /* Display features side by side */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            margin-top: 40px;
+            gap: 30px; /* Space between feature boxes */
+        }
+        
+        .feature {
+            flex: 1; /* Each feature takes equal width */
+            min-width: 300px; /* But never gets too narrow */
+            background-color: #fff; /* Feature box background */
+            padding: 30px; /* Space inside feature boxes */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature h3 {
+            font-size: 22px; /* Feature heading size */
+            margin-bottom: 15px;
+            color: #3498db; /* Feature heading color - highlight color */
+            transition: color 0.3s ease;
+        }
+        
+        /* Feature image styling */
+        .feature-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* List styling for tutoring topics */
+        .topic-columns {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .topic-column {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .topic-heading {
+            color: #3498db;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+        
+        .feature ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+            list-style-type: disc;
+        }
+        
+        .feature li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        body.dark-mode .topic-heading {
+            color: #64b5f6;
+        }
+        
+        /* 
+        ===========================================
+        ABOUT SECTION 
+        ===========================================
+        Styles for the about page content
+        */
+        .team {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .team-member {
+            flex: 1;
+            min-width: 250px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 75%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+        
+        .team-member h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #3498db;
+            transition: color 0.3s ease;
+        }
+        
+        /* Lecture gallery styling */
+        .lecture-categories {
+            margin-bottom: 30px;
+        }
+        
+        .lecture-category {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .category-header {
+            cursor: pointer;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .category-header h3 {
+            margin: 0;
+            color: #3498db;
+            transition: color 0.3s ease;
+        }
+        
+        .category-toggle {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .category-content {
+            display: none;
+            padding-top: 20px;
+        }
+        
+        .category-content.active {
+            display: block;
+        }
+        
+        .lecture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .lecture-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .lecture-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .lecture-thumbnail {
+            width: 100%;
+            height: 158px; /* 16:9 aspect ratio for thumbnail */
+            object-fit: cover;
+        }
+        
+        .lecture-info {
+            padding: 15px;
+        }
+        
+        .lecture-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            transition: color 0.3s ease;
+        }
+        
+        .lecture-meta {
+            font-size: 14px;
+            color: #7f8c8d;
+            display: flex;
+            justify-content: space-between;
+            transition: color 0.3s ease;
+        }
+        
+        /* Booking section - Form styling */
+        .booking-form {
+            background-color: #fff; /* Form background color */
+            padding: 40px; /* Space inside the form */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            max-width: 600px; /* Maximum width of the form */
+            margin: 0 auto; /* Center the form */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .form-group {
+            margin-bottom: 20px; /* Space between form fields */
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500; /* Make labels slightly bold */
+            transition: color 0.3s ease;
+        }
+        
+        /* Styling for all form input elements */
+        input, select, textarea {
+            width: 100%; /* Make inputs full width */
+            padding: 12px; /* Space inside inputs */
+            border: 1px solid #ddd; /* Light gray border */
+            border-radius: 4px; /* Slightly rounded corners */
+            font-size: 16px;
+            background-color: #fff;
+            color: #333;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        textarea {
+            resize: vertical; /* Allow vertical resizing only */
+            min-height: 120px; /* Minimum height for comments box */
+        }
+        
+        /* Button styling - used for all buttons on the site */
+        button {
+            background-color: #3498db; /* Button color - change to match your theme */
+            color: #fff; /* Button text color */
+            border: none;
+            padding: 12px 24px; /* Space inside button */
+            font-size: 16px;
+            border-radius: 4px; /* Rounded corners */
+            cursor: pointer; /* Hand cursor on hover */
+            transition: background-color 0.3s; /* Smooth color change */
+        }
+        
+        button:hover {
+            background-color: #2980b9; /* Darker color on hover */
+        }
+        
+        .lecture-card a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        /* Pricing section styling */
+        .pricing-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 30px 0;
+            justify-content: center;
+        }
+        
+        .pricing-plan {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            flex: 1;
+            min-width: 250px;
+            max-width: 400px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .pricing-plan:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .pricing-plan.featured {
+            border: 2px solid #3498db;
+            position: relative;
+        }
+        
+        .pricing-plan.featured::before {
+            content: "Best Value";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #3498db;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .plan-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            transition: color 0.3s ease;
+        }
+        
+        .plan-price {
+            font-size: 36px;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+        
+        .price-detail {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        
+        .discount-badge {
+            display: inline-block;
+            background-color: #e74c3c;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .plan-features li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .plan-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2ecc71;
+            font-weight: bold;
+        }
+        
+        /* 
+        ===========================================
+        FOOTER SECTION 
+        ===========================================
+        Styling for the page footer
+        */
+        footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 40px 0;
+            margin-top: 60px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #3498db;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #ecf0f1;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: #3498db;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #34495e;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: #3498db;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #34495e;
+        }
+
+        /* 
+        ===========================================
+        NIGHT MODE STYLES
+        ===========================================
+        These styles are applied when dark mode is active
+        */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode header {
+            background-color: #1a1a1a;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        body.dark-mode .logo {
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode h1,
+        body.dark-mode h2 {
+            color: #81a4cd;
+        }
+        
+        body.dark-mode .hero,
+        body.dark-mode .feature,
+        body.dark-mode .team-member,
+        body.dark-mode .booking-form,
+        body.dark-mode .pricing-plan,
+        body.dark-mode .lecture-category,
+        body.dark-mode .lecture-card {
+            background-color: #1e1e1e;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        body.dark-mode .lecture-card {
+            background-color: #2a2a2a;
+        }
+        
+        body.dark-mode .feature h3,
+        body.dark-mode .team-member h3,
+        body.dark-mode .footer-section h3,
+        body.dark-mode .plan-price,
+        body.dark-mode .category-header h3 {
+            color: #64b5f6;
+        }
+        
+        body.dark-mode .lecture-title {
+            color: #e0e0e0;
+        }
+        
+        body.dark-mode .lecture-meta {
+            color: #aaaaaa;
+        }
+        
+        body.dark-mode .plan-name {
+            color: #e0e0e0;
+        }
+        
+        body.dark-mode .price-detail {
+            color: #b0b0b0;
+        }
+        
+        body.dark-mode .discount-badge {
+            background-color: #c0392b;
+        }
+        
+        body.dark-mode input,
+        body.dark-mode select,
+        body.dark-mode textarea {
+            background-color: #333;
+            color: #f0f0f0;
+            border-color: #555;
+        }
+        
+        body.dark-mode footer {
+            background-color: #1a1a1a;
+        }
+        
+        body.dark-mode .social-links a {
+            background-color: #2a2a2a;
+        }
+        
+        /* Night Mode Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #3498db;
+            color: white;
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        body.dark-mode .theme-toggle {
+            background-color: #f39c12;
+        }
+        
+        /* Responsive design - How the site looks on mobile devices */
+        @media (max-width: 768px) {
+            /* Changes for navigation on small screens */
+            .nav-links {
+                margin-top: 20px;
+                flex-direction: column; /* Stack menu items vertically */
+                align-items: flex-end;
+            }
+            
+            .nav-links li {
+                margin-left: 0;
+                margin-bottom: 10px; /* Space between vertical menu items */
+            }
+            
+            nav {
+                flex-direction: column; /* Stack logo and menu vertically */
+                align-items: flex-start;
+            }
+            
+            /* Make hero section padding smaller on mobile */
+            .hero {
+                padding: 30px;
+            }
+            
+            /* Adjust theme toggle position on mobile */
+            .theme-toggle {
+                bottom: 10px;
+                right: 10px;
+                width: 40px;
+                height: 40px;
+            }
+            
+            /* Make pricing plans full width on mobile */
+            .pricing-plan {
+                min-width: 100%;
+            }
+            
+            /* Adjust lecture grid on mobile */
+            .lecture-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+    ===========================================
+    HEADER NAVIGATION
+    ===========================================
+    This section contains the top navigation bar
+    -->
+    <header>
+        <div class="container">
+            <nav>
+                <!-- 
+                LOGO - Change "My Website" to your site name
+                For an image logo:
+                1. Replace with <a href="#" class="logo">Your Site Name</a>
+                2. Add the image in CSS (see the .logo style comments)
+                -->
+                <a href="#" class="logo">Andrew Dotson Tutoring</a>
+                
+                <!-- 
+                NAVIGATION MENU
+                The data-page attribute connects each link to its corresponding section
+                These values must match the section IDs in the HTML below
+                -->
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="about">About</a></li>
+                    <li><a href="#" class="nav-link" data-page="lectures">Free Lectures</a></li>
+                    <li><a href="#" class="nav-link" data-page="booking">Schedule a Session</a></li>
+                    <!-- Add more menu items as needed -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 
+    ===========================================
+    MAIN CONTENT AREA
+    ===========================================
+    This contains all the page content
+    -->
+    <main class="container">
+        <!-- 
+        HOME SECTION
+        This section shows by default when the page loads
+        The "active" class makes it visible (sections without this class are hidden)
+        -->
+        <section id="home" class="content-section active">
+            <!-- Hero banner - Main introduction area -->
+            <div class="hero">
+                <!-- Replace this heading with your own -->
+                <h1>Welcome to Andrew Dotson Tutoring</h1>
+                <!-- Replace this placeholder text with your own introduction -->
+                <p>Expert guidance in physics and mathematics to help you master complex concepts and excel in your studies.</p>
+                <!-- Fixed Learn More button to link to About section -->
+                <button id="learnMoreBtn">Learn More</button>
+            </div>
+            
+            <!-- Features section - First row with tutoring topics -->
+            <div class="features">
+                <!-- Feature 1 - Tutoring Topics in 2 columns -->
+                <div class="feature" style="flex: 1 0 100%;">
+                    <img src="images/tutoring-topics.jpg" alt="Physics and Math Tutoring" class="feature-image">
+                    <h3>Tutoring Topics</h3>
+                    <div class="topic-columns">
+                        <div class="topic-column">
+                            <h4 class="topic-heading">Physics</h4>
+                            <ul>
+                                <li>Classical Mechanics</li>
+                                <li>Electrodynamics</li>
+                                <li>Quantum Mechanics</li>
+                            </ul>
+                        </div>
+                        <div class="topic-column">
+                            <h4 class="topic-heading">Mathematics</h4>
+                            <ul>
+                                <li>Algebra</li>
+                                <li>Trigonometry</li>
+                                <li>Single/Multivariable Calculus</li>
+                                <li>Differential Equations</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Second row with SI and Homework Help -->
+            <div class="features">
+                <!-- Feature 2 - Supplemental Instruction -->
+                <div class="feature">
+                    <img src="images/supplemental-instruction.jpg" alt="Supplemental Instruction" class="feature-image">
+                    <h3>Supplemental Instruction</h3>
+                    <p>Can provide lesson plans and lectures to supplement your learning of the available tutoring topics. Tutees are additionally provided with personalized recorded video lectures.</p>
+                </div>
+                <!-- Feature 3 - Homework Help -->
+                <div class="feature">
+                    <img src="images/homework-help.jpg" alt="Homework Help" class="feature-image">
+                    <h3>Homework Help</h3>
+                    <p>Can provide limitted help on homework, offering suggestions and insight based on the tutoring topic to guide you towards solutions you obtain yourself.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="content-section">
+            <h1>About Us</h1>
+            <p>We provide high-quality tutoring in physics and mathematics for students of all levels.</p>
+            
+            <h2>Team</h2>
+            <div class="team">
+                <div class="team-member">
+                    <img src="images/andrew_lanl.jpeg" alt="Andrew Dotson, Ph.D.">
+                    <h2>Andrew Dotson, Ph.D.</h2>
+                    <h3>Founder, Theoretical Physicist</h3>
+                    <p>I graduated with my Ph.D. in physics in 2025 with a specialty in theoretical nuclear/particle physics. In addition to physics research, I have been making physics videos and teaching online for
+                    the past 8 years.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Free Lectures Section -->
+        <section id="lectures" class="content-section">
+            <h1>Free Video Lectures</h1>
+            <p>Browse through my collection of free educational videos covering various topics in physics and mathematics. Click on any video to watch on YouTube.</p>
+            
+            <div class="lecture-categories">
+                <!-- Physics Lectures -->
+                <div class="lecture-category">
+                    <div class="category-header" onclick="toggleCategory('physics')">
+                        <h3>Physics Lectures</h3>
+                        <span class="category-toggle" id="physics-toggle">+</span>
+                    </div>
+                    <div class="category-content" id="physics-content">
+                        <div class="lecture-grid">
+                            <!-- Individual lecture cards -->
+                            <div class="lecture-card">
+                                <a href="https://www.youtube.com/watch?v=example1" target="_blank">
+                                    <img src="images/lectures/quantum-basics.jpg" alt="Quantum Mechanics Basics" class="lecture-thumbnail">
+                                    <div class="lecture-info">
+                                        <div class="lecture-title">Quantum Mechanics Basics</div>
+                                        <div class="lecture-meta">
+                                            <span>45:22</span>
+                                            <span>Beginner</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            
+                            <div class="lecture-card">
+                                <a href="https://www.youtube.com/watch?v=example2" target="_blank">
+                                    <img src="images/lectures/classical-mechanics.jpg" alt="Classical Mechanics: Newton's Laws" class="lecture-thumbnail">
+                                    <div class="lecture-info">
+                                        <div class="lecture-title">Classical Mechanics: Newton's Laws</div>
+                                        <div class="lecture-meta">
+                                            <span>38:15</span>
+                                            <span>Beginner</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            
+                            <div class="lecture-card">
+                                <a href="https://www.youtube.com/watch?v=example3" target="_blank">
+                                    <img src="images/lectures/electrodynamics.jpg" alt="Electrodynamics: Maxwell's Equations" class="lecture-thumbnail">
+                                    <div class="lecture-info">
+                                        <div class="lecture-title">Electrodynamics: Maxwell's Equations</div>
+                                        <div class
