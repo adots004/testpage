@@ -1,1 +1,89 @@
-
+<section id="booking">
+    <h1>Schedule a Tutoring Session</h1>
+    <p>Choose a tutoring package that suits your needs and fill out the form below to schedule your sessions.</p>
+    
+    <!-- Pricing section -->
+    <div class="pricing-container">
+        <div class="pricing-plan">
+            <div class="plan-name">Single Session</div>
+            <div class="plan-price">$80</div>
+            <div class="price-detail">per session</div>
+            <ul class="plan-features">
+                <li>1-hour tutoring session</li>
+                <li>Personalized attention</li>
+                <li>Flexible scheduling</li>
+                <li>No long-term commitment</li>
+            </ul>
+            <button class="select-plan" data-plan="single">Select Plan</button>
+        </div>
+        
+        <div class="pricing-plan featured">
+            <div class="plan-name">4-Session Package</div>
+            <div class="plan-price">$60</div>
+            <div class="price-detail">per session ($240 total)</div>
+            <div class="discount-badge">Save 25%</div>
+            <ul class="plan-features">
+                <li>Four 1-hour tutoring sessions</li>
+                <li>Consistent learning schedule</li>
+                <li>Personalized lesson plan</li>
+                <li>Progress tracking</li>
+                <li>Email support between sessions</li>
+            </ul>
+            <button class="select-plan" data-plan="package">Select Plan</button>
+        </div>
+    </div>
+    
+    <div class="booking-form">
+        <form id="bookingForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="plan">Tutoring Plan</label>
+                <select id="plan" name="plan" required>
+                    <option value="">Select a plan</option>
+                    <option value="single">Single Session ($80)</option>
+                    <option value="package">4-Session Package ($240 - $60 per session)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="topic">Tutoring Topic</label>
+                <select id="topic" name="topic" required>
+                    <option value="">Select a topic</option>
+                    <option value="classical">Classical Mechanics</option>
+                    <option value="electrodynamics">Electrodynamics</option>
+                    <option value="quantum">Quantum Mechanics</option>
+                    <option value="qft">Quantum Field Theory</option>
+                    <option value="algebra">Algebra</option>
+                    <option value="trigonometry">Trigonometry</option>
+                    <option value="calculus">Calculus</option>
+                    <option value="differential">Differential Equations</option>
+                    <option value="tensor">Tensor Calculus</option>
+                    <option value="other">Other (specify in notes)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="date">Preferred Date</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label for="time">Preferred Time</label>
+                <input type="time" id="time" name="time" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Additional Information</label>
+                <textarea id="message" name="message" placeholder="Tell us about your goals, current level, or any specific areas you need help with."></textarea>
+            </div>
+            <button type="submit">Submit Booking</button>
+        </form>
+    </div>
+</section>
