@@ -1,1 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrew Dotson Tutoring</title>
+    <!-- Keep all your CSS styles in the main index.html file -->
+    <style>
+        /* Your existing CSS here */
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">Andrew Dotson Tutoring</a>
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="about">About</a></li>
+                    <li><a href="#" class="nav-link" data-page="lectures">Free Lectures</a></li>
+                    <li><a href="#" class="nav-link" data-page="booking">Schedule a Session</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
+    <main class="container">
+        <!-- This div will be filled with content from the separate HTML files -->
+        <div id="content-container"></div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <!-- Your existing footer content -->
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Andrew Dotson Tutoring. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">🌙</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Night mode functionality
+            const themeToggle = document.getElementById('themeToggle');
+            const body = document.body;
+            
+            // Check if user has a preference stored
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-mode');
+                themeToggle.innerHTML = '☀️';
+            }
+            
+            themeToggle.addEventListener('click', function() {
+                body.classList.toggle('dark-mode');
+                
+                if (body.classList.contains('dark-mode')) {
+                    themeToggle.innerHTML = '☀️';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    themeToggle.innerHTML = '🌙';
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+            
+            // Content loading functionality
+            const contentContainer = document.getElementById('content-container');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            // Function to load content from separate HTML files
+            async function loadContent(page) {
+                try {
+                    const response = await fetch(`${page}.html`);
+                    if (!response.ok) {
+                        throw new Error(`Failed to load ${page}.html`);
+                    }
+                    const content = await response.text();
+                    contentContainer.innerHTML = content;
+                    
+                    // Initialize any page-specific JavaScript
+                    initPageScripts(page);
+                    
+                    // Update active navigation link
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('data-page') === page) {
+                            link.classList.add('active');
+                        }
+                    });
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    
+                } catch (error) {
+                    console.error('Error loading content:', error);
+                    contentContainer.innerHTML = '<p>Error loading content. Please try again.</p>';
+                }
+            }
+            
+            // Initialize page-specific scripts after loading content
+            function initPageScripts(page) {
+                if (page === 'home') {
+                    const learnMoreBtn = document.getElementById('learnMoreBtn');
+                    if (learnMoreBtn) {
+                        learnMoreBtn.addEventListener('click', function() {
+                            loadContent('about');
+                        });
+                    }
+                } else if (page === 'lectures') {
+                    // Initialize lecture category toggles
+                    window.toggleCategory = function(categoryId) {
+                        const content = document.getElementById(`${categoryId}-content`);
+                        const toggle = document.getElementById(`${categoryId}-toggle`);
+                        
+                        if (content.classList.contains('active')) {
+                            content.classList.remove('active');
+                            toggle.textContent = '+';
+                        } else {
+                            content.classList.add('active');
+                            toggle.textContent = '−';
+                        }
+                    };
+                } else if (page === 'booking') {
+                    // Initialize booking form
+                    const planButtons = document.querySelectorAll('.select-plan');
+                    const planSelect = document.getElementById('plan');
+                    
+                    planButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            const selectedPlan = this.getAttribute('data-plan');
+                            if (planSelect) {
+                                planSelect.value = selectedPlan;
+                            }
+                            document.querySelector('.booking-form').scrollIntoView({ behavior: 'smooth' });
+                        });
+                    });
+                    
+                    const bookingForm = document.getElementById('bookingForm');
+                    if (bookingForm) {
+                        bookingForm.addEventListener('submit', function(e) {
+                            e.preventDefault();
+                            alert('Thank you for your booking! We will contact you soon to confirm your tutoring session.');
+                            bookingForm.reset();
+                        });
+                    }
+                }
+            }
+            
+            // Handle navigation clicks
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetPage = this.getAttribute('data-page');
+                    loadContent(targetPage);
+                });
+            });
+            
+            // Load footer links
+            const footerLinks = document.querySelectorAll('footer a[data-page]');
+            footerLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetPage = this.getAttribute('data-page');
+                    if (targetPage) {
+                        loadContent(targetPage);
+                    }
+                });
+            });
+            
+            // Load home page by default
+            loadContent('home');
+        });
+    </script>
+</body>
+</html>
