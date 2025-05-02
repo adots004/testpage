@@ -1,0 +1,597 @@
+<section id="booking">
+    <h1>Schedule a Session</h1>
+    <p>Choose the service type and package that suits your needs, then select from available dates to schedule your sessions.</p>
+    
+    <!-- Pricing section -->
+    <div class="pricing-container">
+        <div class="pricing-plan">
+            <div class="plan-name">Single Session</div>
+            <div class="plan-price">$80</div>
+            <div class="price-detail">per session</div>
+            <ul class="plan-features">
+                <li>1-hour session</li>
+                <li>Personalized attention</li>
+                <li>Flexible scheduling</li>
+                <li>No long-term commitment</li>
+            </ul>
+            <button class="select-plan" data-plan="single">Select Plan</button>
+        </div>
+        
+        <div class="pricing-plan featured">
+            <div class="plan-name">4-Session Package</div>
+            <div class="plan-price">$60</div>
+            <div class="price-detail">per session ($240 total)</div>
+            <div class="discount-badge">Save 25%</div>
+            <ul class="plan-features">
+                <li>Four 1-hour sessions</li>
+                <li>Consistent learning schedule</li>
+                <li>Personalized approach</li>
+                <li>Progress tracking</li>
+                <li>Email support between sessions</li>
+            </ul>
+            <button class="select-plan" data-plan="package">Select Plan</button>
+        </div>
+    </div>
+    
+    <div class="booking-form">
+        <form id="bookingForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="service-type">Service Type</label>
+                <select id="service-type" name="service-type" required>
+                    <option value="">Select a service type</option>
+                    <option value="tutoring">Tutoring (Homework Help)</option>
+                    <option value="instruction">Supplemental Instruction (Video Lectures)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="plan">Session Plan</label>
+                <select id="plan" name="plan" required>
+                    <option value="">Select a plan</option>
+                    <option value="single">Single Session ($80)</option>
+                    <option value="package">4-Session Package ($240 - $60 per session)</option>
+                </select>
+            </div>
+            <div class="form-group" id="topic-container">
+                <label for="topic" id="topic-label">Topic</label>
+                <select id="topic" name="topic" required>
+                    <option value="">Select a topic</option>
+                    <option value="classical">Classical Mechanics</option>
+                    <option value="electrodynamics">Electrodynamics</option>
+                    <option value="quantum">Quantum Mechanics</option>
+                    <option value="qft">Quantum Field Theory</option>
+                    <option value="algebra">Algebra</option>
+                    <option value="trigonometry">Trigonometry</option>
+                    <option value="calculus">Calculus</option>
+                    <option value="differential">Differential Equations</option>
+                    <option value="tensor">Tensor Calculus</option>
+                    <option value="other">Other (specify in notes)</option>
+                </select>
+            </div>
+            <!-- New Date Selection UI -->
+            <div class="form-group">
+                <label for="date-selector">Available Dates</label>
+                <div id="calendar-container">
+                    <div class="calendar-header">
+                        <button type="button" id="prev-month">&lt;</button>
+                        <div id="current-month">May 2025</div>
+                        <button type="button" id="next-month">&gt;</button>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-day-header">Sun</div>
+                        <div class="calendar-day-header">Mon</div>
+                        <div class="calendar-day-header">Tue</div>
+                        <div class="calendar-day-header">Wed</div>
+                        <div class="calendar-day-header">Thu</div>
+                        <div class="calendar-day-header">Fri</div>
+                        <div class="calendar-day-header">Sat</div>
+                        <!-- Calendar days will be generated by JavaScript -->
+                        <div id="calendar-days"></div>
+                    </div>
+                </div>
+                <input type="hidden" id="selected-date" name="selected-date" required>
+                <div id="selected-date-display">No date selected</div>
+            </div>
+            <div class="form-group" id="time-slots-container" style="display: none;">
+                <label for="time-slots">Available Time Slots</label>
+                <div class="time-slots-grid" id="time-slots-grid">
+                    <!-- Time slots will be generated by JavaScript -->
+                </div>
+                <input type="hidden" id="selected-time-slot" name="selected-time-slot" required>
+            </div>
+            <div class="form-group" id="additional-info-container">
+                <label for="message" id="message-label">Additional Information</label>
+                <textarea id="message" name="message" placeholder="Tell us about your goals, current level, or any specific areas you need help with."></textarea>
+            </div>
+            <button type="submit">Submit Request</button>
+        </form>
+    </div>
+
+    <!-- Add this CSS section to your existing stylesheet -->
+    <style>
+        /* Calendar styling */
+        #calendar-container {
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .calendar-header button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 0 10px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            padding: 10px;
+        }
+        
+        .calendar-day-header {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .calendar-day {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            margin: 2px;
+            border-radius: 50%;
+        }
+        
+        .calendar-day:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .calendar-day.available {
+            border: 2px solid #2ecc71;
+            color: #2ecc71;
+            font-weight: bold;
+        }
+        
+        .calendar-day.selected {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .calendar-day.unavailable {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .calendar-day.other-month {
+            color: #aaa;
+        }
+        
+        #selected-date-display {
+            margin-top: 10px;
+            padding: 8px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        /* Time slots styling */
+        .time-slots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .time-slot {
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .time-slot.available {
+            background-color: #f8f9fa;
+            border-color: #3498db;
+            color: #333;
+        }
+        
+        .time-slot.available:hover {
+            background-color: #e8f4fd;
+            border-color: #2980b9;
+        }
+        
+        .time-slot.selected {
+            background-color: #3498db;
+            color: white;
+            border-color: #2980b9;
+        }
+        
+        .time-slot.unavailable {
+            background-color: #f8f9fa;
+            color: #ccc;
+            cursor: not-allowed;
+            border-color: #ddd;
+        }
+        
+        /* Dark mode adjustments */
+        body.dark-mode #calendar-container,
+        body.dark-mode .time-slot.available {
+            background-color: #2a2a2a;
+            border-color: #444;
+        }
+        
+        body.dark-mode .calendar-day-header {
+            border-bottom-color: #444;
+        }
+        
+        body.dark-mode .calendar-day:hover {
+            background-color: #3a3a3a;
+        }
+        
+        body.dark-mode .calendar-day.other-month {
+            color: #666;
+        }
+        
+        body.dark-mode .calendar-day.unavailable {
+            color: #555;
+        }
+        
+        body.dark-mode #selected-date-display {
+            background-color: #333;
+        }
+        
+        body.dark-mode .time-slot.available {
+            background-color: #333;
+            border-color: #555;
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .time-slot.available:hover {
+            background-color: #444;
+            border-color: #64b5f6;
+        }
+        
+        body.dark-mode .time-slot.unavailable {
+            background-color: #333;
+            color: #666;
+            border-color: #444;
+        }
+    </style>
+
+    <script>
+        // This script will run when the booking page is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const serviceTypeSelect = document.getElementById('service-type');
+            const topicLabel = document.getElementById('topic-label');
+            const messageLabel = document.getElementById('message-label');
+            const messagePlaceholder = document.getElementById('message');
+            
+            // Change form fields based on selected service type
+            serviceTypeSelect.addEventListener('change', function() {
+                const serviceType = this.value;
+                
+                if (serviceType === 'tutoring') {
+                    topicLabel.textContent = 'Tutoring Topic';
+                    messageLabel.textContent = 'Homework Details';
+                    messagePlaceholder.placeholder = 'Tell us about the specific homework problems or concepts you need help with.';
+                } else if (serviceType === 'instruction') {
+                    topicLabel.textContent = 'Lecture Topic';
+                    messageLabel.textContent = 'Lecture Requirements';
+                    messagePlaceholder.placeholder = 'Describe what concepts you would like covered in your personalized video lecture.';
+                } else {
+                    // Default
+                    topicLabel.textContent = 'Topic';
+                    messageLabel.textContent = 'Additional Information';
+                    messagePlaceholder.placeholder = 'Tell us about your goals, current level, or any specific areas you need help with.';
+                }
+            });
+
+            // Calendar Functionality
+            let currentDate = new Date();
+            let selectedDate = null;
+            
+            // Sample available dates (in a real application, this would be fetched from a server)
+            const availableDates = [
+                new Date(2025, 4, 5), // May 5, 2025
+                new Date(2025, 4, 6),
+                new Date(2025, 4, 8),
+                new Date(2025, 4, 12),
+                new Date(2025, 4, 14),
+                new Date(2025, 4, 15),
+                new Date(2025, 4, 19),
+                new Date(2025, 4, 20),
+                new Date(2025, 4, 22),
+                new Date(2025, 4, 26),
+                new Date(2025, 4, 28),
+                new Date(2025, 5, 2), // June 2, 2025
+                new Date(2025, 5, 4),
+                new Date(2025, 5, 9)
+            ];
+            
+            // Sample available time slots for each date
+            const availableTimeSlots = {
+                // Key format: "YYYY-MM-DD"
+                "2025-05-05": ["09:00 AM", "11:00 AM", "02:00 PM", "04:00 PM"],
+                "2025-05-06": ["10:00 AM", "01:00 PM", "03:00 PM"],
+                "2025-05-08": ["09:00 AM", "11:00 AM", "02:00 PM"],
+                "2025-05-12": ["11:00 AM", "01:00 PM", "04:00 PM"],
+                "2025-05-14": ["09:00 AM", "01:00 PM", "03:00 PM"],
+                "2025-05-15": ["10:00 AM", "12:00 PM", "02:00 PM", "04:00 PM"],
+                "2025-05-19": ["09:00 AM", "02:00 PM", "04:00 PM"],
+                "2025-05-20": ["10:00 AM", "12:00 PM", "03:00 PM"],
+                "2025-05-22": ["11:00 AM", "01:00 PM", "03:00 PM"],
+                "2025-05-26": ["09:00 AM", "11:00 AM", "02:00 PM"],
+                "2025-05-28": ["10:00 AM", "01:00 PM", "04:00 PM"],
+                "2025-06-02": ["09:00 AM", "11:00 AM", "03:00 PM"],
+                "2025-06-04": ["10:00 AM", "12:00 PM", "02:00 PM"],
+                "2025-06-09": ["11:00 AM", "01:00 PM", "03:00 PM"]
+            };
+            
+            // Get DOM elements
+            const calendarDays = document.getElementById('calendar-days');
+            const currentMonthDisplay = document.getElementById('current-month');
+            const prevMonthButton = document.getElementById('prev-month');
+            const nextMonthButton = document.getElementById('next-month');
+            const selectedDateDisplay = document.getElementById('selected-date-display');
+            const selectedDateInput = document.getElementById('selected-date');
+            const timeSlotsContainer = document.getElementById('time-slots-container');
+            const timeSlotsGrid = document.getElementById('time-slots-grid');
+            const selectedTimeSlotInput = document.getElementById('selected-time-slot');
+            
+            // Function to check if a date is available
+            function isDateAvailable(date) {
+                return availableDates.some(availableDate => 
+                    availableDate.getDate() === date.getDate() && 
+                    availableDate.getMonth() === date.getMonth() && 
+                    availableDate.getFullYear() === date.getFullYear()
+                );
+            }
+            
+            // Function to format date as YYYY-MM-DD for lookup in the time slots object
+            function formatDateKey(date) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+            
+            // Function to format date for display
+            function formatDateDisplay(date) {
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                return date.toLocaleDateString(undefined, options);
+            }
+            
+            // Function to render the calendar
+            function renderCalendar() {
+                // Update the month display
+                const monthOptions = { month: 'long', year: 'numeric' };
+                currentMonthDisplay.textContent = currentDate.toLocaleDateString(undefined, monthOptions);
+                
+                // Clear the calendar days
+                while (calendarDays.firstChild) {
+                    calendarDays.removeChild(calendarDays.firstChild);
+                }
+                
+                // Get the first day of the month
+                const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+                const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+                
+                // Calculate the starting day of the week (0-6, 0 is Sunday)
+                const startDay = firstDayOfMonth.getDay();
+                
+                // Calculate the number of days in the month
+                const daysInMonth = lastDayOfMonth.getDate();
+                
+                // Calculate the number of days from the previous month to show
+                const daysFromPrevMonth = startDay;
+                
+                // Get the last day of the previous month
+                const lastDayOfPrevMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate();
+                
+                // Generate the grid with days from previous month, current month, and next month
+                const totalDays = 42; // 6 rows of 7 days
+                
+                // Create a grid container for the calendar days
+                const gridContainer = document.createElement('div');
+                gridContainer.style.display = 'grid';
+                gridContainer.style.gridTemplateColumns = 'repeat(7, 1fr)';
+                gridContainer.style.gap = '2px';
+                
+                // Add days from previous month
+                for (let i = 0; i < daysFromPrevMonth; i++) {
+                    const day = document.createElement('div');
+                    day.className = 'calendar-day other-month unavailable';
+                    day.textContent = lastDayOfPrevMonth - daysFromPrevMonth + i + 1;
+                    gridContainer.appendChild(day);
+                }
+                
+                // Add days from current month
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const day = document.createElement('div');
+                    const dateToCheck = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
+                    
+                    // Check if this date is available
+                    const isAvailable = isDateAvailable(dateToCheck);
+                    
+                    // Set class based on availability
+                    day.className = `calendar-day ${isAvailable ? 'available' : 'unavailable'}`;
+                    
+                    // Check if this is the selected date
+                    if (selectedDate && selectedDate.getDate() === i && 
+                        selectedDate.getMonth() === currentDate.getMonth() && 
+                        selectedDate.getFullYear() === currentDate.getFullYear()) {
+                        day.classList.add('selected');
+                    }
+                    
+                    day.textContent = i;
+                    
+                    // Add click event for available dates
+                    if (isAvailable) {
+                        day.addEventListener('click', function() {
+                            // Deselect previously selected date
+                            const previouslySelected = document.querySelector('.calendar-day.selected');
+                            if (previouslySelected) {
+                                previouslySelected.classList.remove('selected');
+                            }
+                            
+                            // Select this date
+                            day.classList.add('selected');
+                            selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
+                            
+                            // Update hidden input value
+                            selectedDateInput.value = formatDateKey(selectedDate);
+                            
+                            // Update display
+                            selectedDateDisplay.textContent = formatDateDisplay(selectedDate);
+                            
+                            // Show available time slots for this date
+                            showTimeSlots(selectedDate);
+                        });
+                    }
+                    
+                    gridContainer.appendChild(day);
+                }
+                
+                // Add days from next month
+                const daysFromNextMonth = totalDays - daysFromPrevMonth - daysInMonth;
+                for (let i = 1; i <= daysFromNextMonth; i++) {
+                    const day = document.createElement('div');
+                    day.className = 'calendar-day other-month unavailable';
+                    day.textContent = i;
+                    gridContainer.appendChild(day);
+                }
+                
+                // Append the grid to the calendar
+                calendarDays.appendChild(gridContainer);
+            }
+            
+            // Function to show available time slots for a selected date
+            function showTimeSlots(date) {
+                // Clear the time slots container
+                while (timeSlotsGrid.firstChild) {
+                    timeSlotsGrid.removeChild(timeSlotsGrid.firstChild);
+                }
+                
+                // Get the date key for lookup
+                const dateKey = formatDateKey(date);
+                
+                // Get available time slots for this date
+                const timeSlots = availableTimeSlots[dateKey] || [];
+                
+                // Display the time slots
+                if (timeSlots.length > 0) {
+                    // Show the container
+                    timeSlotsContainer.style.display = 'block';
+                    
+                    // Create a time slot element for each available time
+                    timeSlots.forEach(timeSlot => {
+                        const timeSlotElement = document.createElement('div');
+                        timeSlotElement.className = 'time-slot available';
+                        timeSlotElement.textContent = timeSlot;
+                        
+                        // Add click event
+                        timeSlotElement.addEventListener('click', function() {
+                            // Deselect previously selected time slot
+                            const previouslySelected = document.querySelector('.time-slot.selected');
+                            if (previouslySelected) {
+                                previouslySelected.classList.remove('selected');
+                            }
+                            
+                            // Select this time slot
+                            timeSlotElement.classList.add('selected');
+                            
+                            // Update hidden input
+                            selectedTimeSlotInput.value = timeSlot;
+                        });
+                        
+                        timeSlotsGrid.appendChild(timeSlotElement);
+                    });
+                } else {
+                    // Hide the container if no time slots available
+                    timeSlotsContainer.style.display = 'none';
+                    selectedTimeSlotInput.value = '';
+                }
+            }
+            
+            // Initialize the calendar
+            renderCalendar();
+            
+            // Add event listeners for prev/next month buttons
+            prevMonthButton.addEventListener('click', function() {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                renderCalendar();
+            });
+            
+            nextMonthButton.addEventListener('click', function() {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                renderCalendar();
+            });
+            
+            // Form submission handler
+            const bookingForm = document.getElementById('bookingForm');
+            if (bookingForm) {
+                bookingForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Validate date and time selection
+                    if (!selectedDateInput.value) {
+                        alert('Please select an available date.');
+                        return;
+                    }
+                    
+                    if (!selectedTimeSlotInput.value) {
+                        alert('Please select an available time slot.');
+                        return;
+                    }
+                    
+                    // Form submission success
+                    alert('Thank you for your booking! We will contact you soon to confirm your tutoring session on ' + 
+                          selectedDateDisplay.textContent + ' at ' + selectedTimeSlotInput.value + '.');
+                    bookingForm.reset();
+                    
+                    // Reset the date and time slot selection
+                    selectedDate = null;
+                    selectedDateInput.value = '';
+                    selectedDateDisplay.textContent = 'No date selected';
+                    timeSlotsContainer.style.display = 'none';
+                    selectedTimeSlotInput.value = '';
+                    
+                    // Re-render the calendar
+                    renderCalendar();
+                });
+            }
+        });
+    </script>
+</section>
